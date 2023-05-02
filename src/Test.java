@@ -1,3 +1,7 @@
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Test {
     public static void main(String[] args) {
 
@@ -22,5 +26,127 @@ public class Test {
         Print how many students are MathStudent with message -> "Math students = {numberOfMathStudents}"
         Print how many students are ScienceStudent with message -> "Science students = {numberOfScienceStudents}"
          */
+
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Student> students = new ArrayList<>();
+
+        int mathCount = 0;
+        int scienceCount = 0;
+        while (mathCount + scienceCount < 3) {
+            System.out.print(UserQuestions.askToJoin);
+            String answer = scanner.nextLine().toUpperCase();
+            if (answer.equals("N")) {
+                continue;
+            } else if (answer.equals("Y")) {
+                try {
+                    Student student = new Student();
+                    System.out.print(UserQuestions.askFirstName);
+                    String firstName = scanner.nextLine();
+                    student.setFirstName(firstName);
+
+                    System.out.print(UserQuestions.askLastName);
+                    String lastName = scanner.nextLine();
+                    student.setLastName(lastName);
+
+                    System.out.print(UserQuestions.askAge);
+                    int age = scanner.nextInt();
+                    scanner.nextLine();
+                    Permission.checkAge(age);
+                    student.setAge(age);
+
+                    System.out.print(UserQuestions.askGender);
+                    String gender = scanner.nextLine().toUpperCase();
+                    student.setGender(gender);
+
+                    System.out.print(UserQuestions.askClassName);
+                    String className = scanner.nextLine().toUpperCase();
+                    if (className.equals("MATH")) {
+                        student.setClassName("Math");
+                        mathCount++;
+
+                    } else if (className.equals("SCIENCE")) {
+                        student.setClassName("Science");
+                        scienceCount++;
+
+                    } else {
+                        Permission.checkClassName(className);
+                    }
+                    students.add(student);
+                    System.out.println("Congratulations! You are registered for " + className + " class." + "\n");
+                } catch (RuntimeException e) {
+                    System.out.println(e.getMessage());
+                }
+            } else {
+                System.out.println("Invalid answer.");
+            }
+        }
+        for (Student student : students) {
+            System.out.println(student.toString());
+        }
+
+        System.out.println("Math students = " + mathCount);
+        System.out.println("Science students = " + scienceCount);
+
     }
 }
+       /* SECOND WAY, But getting error
+        List<Student> students = new ArrayList<>();
+
+        import java.util.List;
+
+        int numberOfMathStudents = 0;
+        int numberOfScienceStudents = 0;
+
+
+            Scanner scanner = new Scanner(System.in);
+            int numStudents = 0;
+            while (numStudents < 3) {
+                System.out.println(UserQuestions.askToJoin);
+                String joinAnswer = scanner.nextLine().trim();
+                if (joinAnswer.equalsIgnoreCase("Y")) {
+                    try {
+                        System.out.println(UserQuestions.askFirstName);
+                        String firstName = scanner.nextLine().trim();
+                        System.out.println(UserQuestions.askLastName);
+                        String lastName = scanner.nextLine().trim();
+                        System.out.println(UserQuestions.askAge);
+                        int age = Integer.parseInt(scanner.nextLine().trim());
+                        System.out.println(UserQuestions.askGender);
+                        String gender = scanner.nextLine().trim();
+                        System.out.println(UserQuestions.askClassName);
+                        String className = scanner.nextLine().trim();
+                        Permission.checkAge(age);
+                        Permission.checkClassName(className);
+                        Student student;
+                        if (className.equalsIgnoreCase("Math")) {
+                            student = new MathStudent();
+                            numberOfMathStudents++;
+                        } else {
+                            student = new ScienceStudent(firstName, lastName, age, gender);
+                            numberOfScienceStudents++;
+                        }
+                        students.add(student);
+                        System.out.println("Congratulations! You are registered for " + className + " class.");
+                        numStudents++;
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+            System.out.println("\nRegistered students:");
+            for (Student student : students) {
+                System.out.println(student);
+            }
+
+            System.out.println("Math students = " + numberOfMathStudents);
+            System.out.println("Science students = " + numberOfScienceStudents);
+        }
+
+
+        */
+
+/*
+Difference between interface and abstract class in java.
+2. Method Overload vs Method Override.
+3. What is/ explain oop principles.
+ */
